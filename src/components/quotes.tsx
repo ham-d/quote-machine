@@ -1,17 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 
 type QuoteResults = {
   content: string,
   author: string,
 }
+type Props = {
+  getBgImage: () => void
+}
 const refreshTime = 15
-const Quotes = (): JSX.Element => {
+
+const Quotes = ({getBgImage }: Props): JSX.Element => {
   const [counter, setCounter] = useState(refreshTime)
   const [quote, setQuote] = useState<QuoteResults | any>({});
   const getQuote = async () => {
-    const quoteUrl = "https://api.quotable.io/random";
+    const quoteApi = "https://api.quotable.io/random";
     try {
-      const response = await fetch(quoteUrl);
+      const response = await fetch(quoteApi);
       const { content, author } = await response.json();
 
       setQuote({
@@ -30,6 +35,7 @@ const Quotes = (): JSX.Element => {
   useEffect(() => {
     if (counter === 0) {
       getQuote();
+      getBgImage();
       setCounter(refreshTime);
   }
   const timer: any = counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
