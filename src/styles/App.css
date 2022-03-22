@@ -1,0 +1,9 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Source Sans Pro', 'sans-serif';
+  font-size: 1rem;
+  color: #5c5c5c;
+}

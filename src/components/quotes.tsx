@@ -1,20 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import '../styles/quotes.css'
 
 type QuoteResults = {
-  content: string,
-  author: string,
+  content: string;
+  author: string;
 }
 type Props = {
+  toggleImageLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   getBgImage: () => void
 }
 const refreshTime = 15
 
-const Quotes = ({getBgImage }: Props): JSX.Element => {
+const Quotes = ({getBgImage, toggleImageLoaded}: Props): JSX.Element => {
   const [counter, setCounter] = useState(refreshTime)
   const [quote, setQuote] = useState<QuoteResults | any>({});
+  const [fade, setFade] = useState("fade-out")
+
   const getQuote = async () => {
     const quoteApi = "https://api.quotable.io/random";
+
     try {
       const response = await fetch(quoteApi);
       const { content, author } = await response.json();
@@ -23,6 +28,7 @@ const Quotes = ({getBgImage }: Props): JSX.Element => {
         content,
         author,
       });
+      setFade("fade-in")
     } catch (e) {
       const errMsg = `Error fetching quotes: ${e}`
       console.log(errMsg);
@@ -33,7 +39,13 @@ const Quotes = ({getBgImage }: Props): JSX.Element => {
     getQuote();
   }, [])
   useEffect(() => {
+    if (counter === 1) {
+      setTimeout(() => {
+        setFade("fade-out")
+      })
+    }
     if (counter === 0) {
+      toggleImageLoaded(false)
       getQuote();
       getBgImage();
       setCounter(refreshTime);
@@ -44,18 +56,19 @@ const Quotes = ({getBgImage }: Props): JSX.Element => {
   }, [counter])
 
   return (
-    <div>
+    <div className={`quote-container ${fade}`}>
       {
-        quote?.content &&
+        quote?.content && quote?.author 
+        &&
         <>
-          <h2>
+          <h2 className="quote">
             "{quote?.content}"
           </h2>
-          <h4>
-            {quote?.author}
+          <h4 className="author">
+            - {quote?.author}
           </h4>
           <div>
-              new quote in {counter} second(s)
+              {counter}s
           </div>
         </>
       }

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 
-import './App.css';
+import './styles/App.css';
 import Quotes from './components/quotes';
 
 const {
@@ -46,6 +46,7 @@ const App = (): JSX.Element => {
         imageLoaded
         &&
         <Quotes
+          toggleImageLoaded={toggleImageLoaded}
           getBgImage={getBgImage}
         />
       }

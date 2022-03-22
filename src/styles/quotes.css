@@ -1,0 +1,26 @@
+.quote-container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 6px 6px 5px #5D5B3D;
+  background-color: aliceblue;
+  height: 200px;
+  width: 70vw;
+  padding: 20px;
+}
+
+.quote {
+  text-align: center;
+}
+.author {
+  margin-top: 10px;
+}
+
+.fade-in {
+  transition: opacity 3s ease;
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 3s ease;
+}
